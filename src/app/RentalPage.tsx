@@ -42,26 +42,26 @@ const LEVELS = [
     step: "1단계",
     title: "점자 모양 구별",
     desc: "점자를 배우기 전, 손끝으로 점 위치와 모양을 구별하는 단계",
-    color: "bg-accent/20",
   },
   {
     step: "2단계",
     title: "정자 점자 읽기",
     desc: "자음·모음을 하나씩 쓰는 정자 점자를 배우는 단계",
-    color: "bg-accent/50",
   },
   {
     step: "3단계",
     title: "약자 점자 읽기",
     desc: "정자 점자를 읽을 수 있고, 약자 점자를 배우는 단계",
-    color: "bg-accent",
   },
 ]
 
 const APPLICATION_STEPS: Array<[string, string | string[]]> = [
   [
     "온라인 신청서 작성",
-    "학습 단계에 맞는 레벨을 골라 신청서를 작성해 주세요.",
+    [
+      "학습 단계에 맞는 레벨을 골라 신청서를 작성해 주세요.",
+      "학습 단계가 맞다면 나이에 관계없이, 전맹·저시력 모두 사용할 수 있어요.",
+    ],
   ],
   [
     "배송 및 수령",
@@ -154,34 +154,22 @@ function Overview() {
   )
 }
 
-function LearningLevels() {
+function LevelOptions() {
   return (
-    <section className={`${sectionClass} bg-background`} aria-labelledby="learning-levels-title">
-      <div className={containerClass}>
-        <div className="mb-10 max-w-3xl">
-          <h2 id="learning-levels-title" className={`${headingClass} mb-4`}>
-            학습 단계에 맞춰 연습해요
-          </h2>
-          <p className="text-base leading-[1.7] text-muted-foreground lg:text-lg">
-            신청서에서 아이에게 맞는 레벨을 골라 주세요.
-          </p>
-        </div>
-        <ol className="grid gap-4 lg:grid-cols-3">
-          {LEVELS.map((level) => (
-            <li
-              key={level.step}
-              className={`rounded-2xl p-6 text-accent-foreground lg:p-7 ${level.color}`}
-            >
-              <h3 className="mb-2 text-xl font-bold">{level.title}</h3>
-              <p className="text-base leading-[1.7]">{level.desc}</p>
-            </li>
-          ))}
-        </ol>
-        <p className="mt-5 text-sm leading-[1.7] text-muted-foreground lg:text-right">
-          학습 단계가 맞다면 나이에 관계없이, 전맹·저시력 모두 사용할 수 있어요.
-        </p>
-      </div>
-    </section>
+    <ol aria-label="학습 단계" className="mx-auto mt-5 grid max-w-[680px] gap-3 md:grid-cols-3">
+        {LEVELS.map((level) => (
+          <li
+            key={level.step}
+            className="rounded-2xl bg-accent/25 px-4 py-4 text-center text-accent-foreground"
+          >
+            <p className="mb-2 inline-block rounded-full bg-background px-3 py-0.5 text-xs font-bold">
+              {level.step}
+            </p>
+            <p className="mb-1 font-bold">{level.title}</p>
+            <p className="mx-auto max-w-[13em] text-sm leading-[1.6] break-keep text-balance">{level.desc}</p>
+          </li>
+        ))}
+    </ol>
   )
 }
 
@@ -200,24 +188,27 @@ function RentalSection() {
         </div>
 
         <div className="mx-auto mt-12 max-w-[920px] rounded-3xl bg-background p-7 sm:p-10">
-          <ol className="grid gap-x-12 gap-y-8 md:grid-cols-2">
+          <ol className="divide-y divide-border">
             {APPLICATION_STEPS.map(([title, subtitle], index) => (
-              <li key={title} className="flex items-start gap-4">
-                <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-accent font-display text-lg font-extrabold text-accent-foreground">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <div>
-                  <p className="pt-1 font-bold">{title}</p>
-                  {Array.isArray(subtitle) ? (
-                    <ul className="mt-2 list-disc space-y-1 pl-5 text-sm leading-[1.6] text-muted-foreground">
-                      {subtitle.map((item) => <li key={item}>{item}</li>)}
-                    </ul>
-                  ) : (
-                    <p className="mt-1 text-sm leading-[1.6] text-muted-foreground">
-                      {subtitle}
-                    </p>
-                  )}
+              <li key={title} className="py-7 first:pt-0 last:pb-0">
+                <div className="flex items-start gap-4">
+                  <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-accent font-display text-lg font-extrabold text-accent-foreground">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <p className="pt-2 text-lg font-bold lg:text-xl">{title}</p>
+                    {Array.isArray(subtitle) ? (
+                      <ul className="mt-3 list-disc space-y-1.5 pl-5 text-base leading-[1.6] text-muted-foreground">
+                        {subtitle.map((item) => <li key={item}>{item}</li>)}
+                      </ul>
+                    ) : (
+                      <p className="mt-2 text-base leading-[1.6] text-muted-foreground">
+                        {subtitle}
+                      </p>
+                    )}
+                  </div>
                 </div>
+                {index === 0 && <LevelOptions />}
               </li>
             ))}
           </ol>
@@ -321,7 +312,6 @@ export default function RentalPage() {
     <PageLayout ctaHref="#apply" currentHref={RENTAL_URL}>
       <RentalHero />
       <Overview />
-      <LearningLevels />
       <RentalSection />
       <FAQ />
     </PageLayout>

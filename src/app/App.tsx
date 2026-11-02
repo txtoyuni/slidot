@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from "react"
 import {
   PageLayout,
   RENTAL_URL,
@@ -91,62 +90,47 @@ const REVIEWS = [
   "레고 모양의 블럭으로 호기심을 자극하고 흥미를 유발할 수 있어 매우 좋아요. 특히 자기 목소리 녹음해서 사용하는 것을 많이 즐거워했어요.",
 ]
 
-const STATS = [
-  { value: "19명", label: "함께 개발한 어린이" },
-  { value: "4회", label: "사용성 테스트 반복" },
-]
-
-function MetricValue({ value }: { value: string }) {
-  return value.split(/(\d+(?:\.\d+)?%?)/).map((part, index) =>
-    /\d/.test(part) ? (
-      <span key={index} className="font-display">
-        {part}
-      </span>
-    ) : (
-      <span key={index}>{part}</span>
-    ),
-  )
-}
-
 function Hero() {
   return (
     <section
       aria-labelledby="hero-title"
-      className="bg-brand px-6 pt-36 pb-20 text-center lg:pt-44 lg:pb-24"
+      className="overflow-hidden bg-brand px-6 pt-32 pb-16 lg:pt-40 lg:pb-24"
     >
-      <div className="mx-auto max-w-[820px]">
-        <p className="mb-6 text-base font-medium leading-[1.6] text-white/90 lg:text-lg">
-          매일 해야 하는 점자 연습, 꾸준히 하기 쉽지 않죠?
-        </p>
-        <h1
-          id="hero-title"
-          className="mb-6 text-[36px] leading-[1.25] font-extrabold text-white sm:text-[44px] lg:text-[56px]"
-        >
-          점자를 놀이처럼 익히는 장난감
-        </h1>
-        <p className="mx-auto max-w-[680px] text-base leading-[1.8] text-white lg:text-xl">
-          <span className="block">
-            집에서 하루 10분 이상, 즐겁게 점자 읽기를 연습할 수 있어요.
-          </span>
-          <span className="block">
-            SK행복나눔재단에서 시각장애 아동 가정에 무료로 대여해 드립니다.
-          </span>
-        </p>
-        <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <a
-            href={RENTAL_URL}
-            className="inline-flex min-h-14 w-full items-center justify-center rounded-xl bg-primary px-7 py-3.5 text-base font-bold text-primary-foreground transition-colors hover:bg-foreground sm:w-auto"
+      <div className={`${containerClass} grid items-center gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:gap-12`}>
+        <div>
+          <h1
+            id="hero-title"
+            className="text-[32px] leading-[1.3] font-extrabold text-white sm:text-[40px] lg:text-[48px]"
           >
-            무료로 신청하기
-          </a>
-          <a
-            href="#about"
-            className="inline-flex min-h-14 w-full items-center justify-center rounded-xl bg-background px-7 py-3.5 text-base font-bold text-primary transition-colors hover:bg-secondary sm:w-auto"
-          >
-            더 알아보기
-          </a>
+            <span className="block">슬라이닷,</span>
+            <span className="block">점자를 놀이처럼</span>
+            <span className="block">익히는 장난감</span>
+          </h1>
+          <p className="mt-6 text-base leading-[1.8] text-white lg:text-lg">
+            하루 15분, 스스로 점자 읽기를 연습할 수 있어요.
+          </p>
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+            <a
+              href={RENTAL_URL}
+              className="inline-flex min-h-14 w-full items-center justify-center rounded-xl bg-primary px-7 py-3.5 text-base font-bold text-primary-foreground transition-colors hover:bg-foreground sm:w-auto"
+            >
+              무료 신청하기
+            </a>
+            <a
+              href="#about"
+              className="inline-flex min-h-14 w-full items-center justify-center rounded-xl bg-background px-7 py-3.5 text-base font-bold text-primary transition-colors hover:bg-secondary sm:w-auto"
+            >
+              더 알아보기
+            </a>
+          </div>
         </div>
-        <p className="mt-4 text-sm text-white/85">신청서 작성 약 3분</p>
+        <img
+          src="/images/slidot-line-art.webp"
+          alt=""
+          width="895"
+          height="851"
+          className="mx-auto w-full max-w-[260px] sm:max-w-[360px] lg:max-w-[480px]"
+        />
       </div>
     </section>
   )
@@ -165,9 +149,9 @@ function Challenges() {
             <span className="block">슬라이닷으로 반복하면서 연습해 보세요.</span>
           </p>
         </div>
-        <ul className="grid gap-6 md:grid-cols-3 md:gap-8">
+        <ul className="grid gap-4 md:grid-cols-3 md:gap-5">
           {CHALLENGES.map((item) => (
-            <li key={item.title} className="border-t-2 border-primary pt-5">
+            <li key={item.title} className="rounded-2xl bg-secondary p-7">
               <h3 className="mb-2 text-xl font-bold">{item.title}</h3>
               <p className="leading-[1.7] text-muted-foreground">{item.desc}</p>
             </li>
@@ -182,7 +166,7 @@ function About() {
   return (
     <section id="validation" className={`${sectionClass} bg-background`}>
       <div className={containerClass}>
-        <div className="mb-12 grid gap-6 lg:grid-cols-[1fr_1fr] lg:items-start lg:gap-20">
+        <div className="mb-16 grid gap-6 lg:mb-24 lg:grid-cols-[1fr_1fr] lg:items-start lg:gap-20">
           <div>
             <h2 className={`${headingClass} whitespace-pre-line`}>
               {"아이와 함께 검증한\n학습 장난감"}
@@ -194,112 +178,55 @@ function About() {
             </p>
           </div>
         </div>
-        <div className="grid gap-5 lg:grid-cols-2 lg:gap-12">
-          <div>
-            <dl className="grid grid-cols-2 gap-3 lg:max-w-[480px] lg:gap-5">
-              {STATS.map((stat) => (
-                <div
-                  key={stat.label}
-                  className="flex h-fit flex-col justify-center rounded-2xl bg-secondary px-4 py-7 lg:p-7"
-                >
-                  <dd className="mb-2 text-[30px] font-extrabold text-primary lg:text-[38px]">
-                    <MetricValue value={stat.value} />
-                  </dd>
-                  <dt className="text-sm text-muted-foreground sm:text-base">
-                    {stat.label}
-                  </dt>
-                </div>
-              ))}
-            </dl>
-            <p className="mt-3 text-sm text-muted-foreground">2023~2026년</p>
+        <section
+          aria-label="이용 후기"
+          className="mx-auto max-w-[760px] bg-card"
+        >
+          <div className="divide-y divide-border">
+            {REVIEWS.map((review) => (
+              <blockquote
+                key={review}
+                className="flex items-start gap-3 py-5 first:pt-0 last:pb-0 before:shrink-0 before:font-display before:text-4xl before:leading-none before:font-extrabold before:text-primary before:content-['“']"
+              >
+                <p className="text-base leading-[1.65] font-medium text-foreground lg:text-lg">
+                  {review}
+                </p>
+              </blockquote>
+            ))}
           </div>
-          <section
-            aria-label="이용 후기"
-            className="bg-card px-5 pb-5 lg:px-7 lg:pb-7"
-          >
-            <div className="divide-y divide-border">
-              {REVIEWS.map((review) => (
-                <blockquote
-                  key={review}
-                  className="flex items-start gap-3 py-5 first:pt-0 last:pb-0 before:shrink-0 before:font-display before:text-4xl before:leading-none before:font-extrabold before:text-primary before:content-['“']"
-                >
-                  <p className="text-base leading-[1.65] font-medium text-foreground lg:text-lg">
-                    {review}
-                  </p>
-                </blockquote>
-              ))}
-            </div>
-            <p className="mt-5 text-sm text-muted-foreground/90 lg:text-right">
-              이용 경험과 학습 변화는 아이마다 다를 수 있어요.
-            </p>
-          </section>
-        </div>
+          <p className="mt-5 text-sm text-muted-foreground/90 lg:text-right">
+            이용 경험과 학습 변화는 아이마다 다를 수 있어요.
+          </p>
+        </section>
       </div>
     </section>
   )
 }
 
 function TutorialVideo() {
-  const [playing, setPlaying] = useState(false)
-  const iframeRef = useRef<HTMLIFrameElement>(null)
   const { id, title, start } = TUTORIAL_VIDEO
   const params = new URLSearchParams({
     start: String(start),
-    autoplay: "1",
     rel: "0",
     cc_load_policy: "1",
     cc_lang_pref: "ko",
     hl: "ko",
   })
 
-  // 재생 버튼이 iframe으로 바뀌면 키보드 포커스를 영상으로 옮김
-  useEffect(() => {
-    if (playing) iframeRef.current?.focus()
-  }, [playing])
-
   return (
     <figure>
       <div className="relative aspect-video overflow-hidden rounded-3xl bg-secondary">
-        {playing ? (
-          <iframe
-            ref={iframeRef}
-            src={`https://www.youtube-nocookie.com/embed/${id}?${params}`}
-            title={`${title} (YouTube 영상)`}
-            allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
-            allowFullScreen
-            referrerPolicy="strict-origin-when-cross-origin"
-            className="absolute inset-0 size-full"
-          />
-        ) : (
-          <button
-            type="button"
-            aria-label={`튜토리얼 영상 재생: ${title}`}
-            onClick={() => setPlaying(true)}
-            className="group absolute inset-0 size-full focus-visible:outline-4 focus-visible:-outline-offset-4 focus-visible:outline-primary"
-          >
-            <img
-              src="/images/slidot-in-use.webp"
-              alt=""
-              loading="lazy"
-              width="2048"
-              height="1152"
-              className="size-full object-cover object-[65%_center]"
-            />
-            <span
-              aria-hidden="true"
-              className="absolute inset-0 flex items-center justify-center bg-foreground/20 transition-colors group-hover:bg-foreground/30"
-            >
-              <span className="flex size-18 items-center justify-center rounded-full bg-primary text-primary-foreground transition-transform group-hover:scale-105 lg:size-20">
-                <svg viewBox="0 0 24 24" fill="currentColor" className="ml-1 size-8">
-                  <path d="M8 5.5v13l10.5-6.5z" />
-                </svg>
-              </span>
-            </span>
-          </button>
-        )}
+        <iframe
+          src={`https://www.youtube-nocookie.com/embed/${id}?${params}`}
+          title={`${title} (YouTube 영상)`}
+          loading="lazy"
+          allow="encrypted-media; picture-in-picture; fullscreen"
+          allowFullScreen
+          referrerPolicy="strict-origin-when-cross-origin"
+          className="absolute inset-0 size-full"
+        />
       </div>
-      <figcaption className="mt-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm text-muted-foreground">
-        <span>{title} · 음성 해설, 한국어 자막</span>
+      <figcaption className="mt-3 flex justify-end text-sm">
         <a
           href={`https://www.youtube.com/watch?v=${id}&t=${start}s`}
           target="_blank"
