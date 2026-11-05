@@ -4,6 +4,7 @@ import slidotLogo from "../imports/slidot_2_________0205.png"
 export const HOME_URL = import.meta.env.BASE_URL
 export const RENTAL_URL = `${HOME_URL}rental/`
 export const APPLY_FORM_URL = "https://tally.so/r/mOZG2p"
+export const DEVELOPMENT_URL = "https://rndlab.figma.site/project/slidot"
 
 const NAV_LINKS = [
   { label: "슬라이닷은", href: `${HOME_URL}#about` },
@@ -15,7 +16,7 @@ const FOOTER_LINKS = [
   { label: "슬라이닷은", href: `${HOME_URL}#about` },
   { label: "슬라이닷 사용법", href: "https://www.youtube.com/playlist?list=PLdonruSYetBY", external: true },
   { label: "대여 프로그램", href: RENTAL_URL },
-  { label: "슬라이닷 개발기", href: "https://rndlab.figma.site/project/slidot", external: true },
+  { label: "슬라이닷 개발기", href: DEVELOPMENT_URL, external: true },
   { label: "자주 묻는 질문", href: `${RENTAL_URL}#faq` },
 ]
 
@@ -24,6 +25,57 @@ export const buttonClass =
 export const headingClass = "text-[32px] leading-[1.35] font-extrabold lg:text-[44px]"
 export const sectionClass = "px-6 py-20 lg:py-24"
 export const containerClass = "mx-auto max-w-[1160px]"
+
+const LEVELS = [
+  {
+    step: "1단계",
+    title: "점자 모양 구별",
+    desc: "점자 글자를 배우기 전, 손끝으로 점의 위치와 모양을 구별해요.",
+  },
+  {
+    step: "2단계",
+    title: "정자 단어",
+    desc: "정자로 쓴 단어를 읽어요.",
+  },
+  {
+    step: "3단계",
+    title: "약자 단어",
+    desc: "약자가 들어간 단어를 읽어요.",
+  },
+]
+
+export function LevelsSection({ description }: { description?: string }) {
+  return (
+    <section aria-labelledby="levels-title" className={`${sectionClass} bg-accent/10`}>
+      <div className={containerClass}>
+        <h2 id="levels-title" className={headingClass}>
+          <span className="block lg:inline">우리 아이는 </span>
+          <span className="block lg:inline">어느 단계일까요?</span>
+        </h2>
+        {description && (
+          <p className="mt-4 text-base leading-[1.7] text-muted-foreground lg:text-lg">
+            {description}
+          </p>
+        )}
+        <ol aria-label="학습 단계" className="mt-8 grid gap-4 md:grid-cols-3 md:gap-5">
+          {LEVELS.map((level) => (
+            <li
+              key={level.step}
+              className="rounded-2xl border border-accent/50 bg-background p-6"
+            >
+              <p className="mb-1 text-sm font-bold text-accent-foreground">{level.step}</p>
+              <p className="mb-2 text-lg font-extrabold">{level.title}</p>
+              <p className="leading-[1.6] text-muted-foreground">{level.desc}</p>
+            </li>
+          ))}
+        </ol>
+        <p className="mt-5 text-sm leading-[1.6] text-muted-foreground">
+          전맹·저시력 모두 사용할 수 있고, 학습 단계가 맞으면 나이와 관계없이 신청할 수 있어요.
+        </p>
+      </div>
+    </section>
+  )
+}
 
 function Brand() {
   return (
@@ -72,7 +124,7 @@ function NavBar({ ctaHref, currentHref }: { ctaHref: string; currentHref?: strin
             href={ctaHref}
             className="inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-5 py-2.5 text-base font-bold text-primary-foreground transition-colors hover:bg-foreground"
           >
-            무료 신청하기
+            무료 대여 신청
           </a>
         </div>
         <button
@@ -120,7 +172,7 @@ function NavBar({ ctaHref, currentHref }: { ctaHref: string; currentHref?: strin
             onClick={() => setOpen(false)}
             className={buttonClass}
           >
-            <span>무료 신청하기</span>
+            <span>무료 대여 신청</span>
             <span aria-hidden="true">→</span>
           </a>
         </nav>
